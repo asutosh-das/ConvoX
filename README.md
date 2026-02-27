@@ -105,5 +105,22 @@ The app should now be running at `http://localhost:5173` (or the port specified 
 ## 💡 How the AI Assistant Works
 ConvoX leverages a seamless API integration to inject intelligent responses into standard real-time chats or dedicated bot-interaction channels. The backend securely manages the API keys (using `openai` node package pointing to Groq's high-speed inference endpoints), ensuring that sensitive credentials are never exposed to the client.
 
+## 🌍 Deployment
+
+You can deploy ConvoX for **free** using standard cloud platforms. The recommended approach is separating the Frontend and Backend.
+
+### 1. Backend (Server) -> Deploy to Render or Railway
+- Create a new Web Service on [Render](https://render.com/) or [Railway](https://railway.app/).
+- Set the root directory to `server`.
+- Use the Build Command: `npm install`
+- Use the Start Command: `npm start` (Make sure your `server/package.json` has `"start": "node server.js"`).
+- Add all your Environment Variables (`MONGODB_URI`, `JWT_SECRET`, `GROQ_API_KEY`) exactly as they are in your local `.env`.
+
+### 2. Frontend (Client) -> Deploy to Vercel or Netlify
+- Create a new project on [Vercel](https://vercel.com/) or [Netlify](https://www.netlify.com/).
+- Set the Root Directory to `client`.
+- The Framework preset should auto-detect **Vite** (Build command: `npm run build`, Output directory: `dist`).
+- **Important:** Add an environment variable (e.g., `VITE_API_URL` or whatever your frontend uses to connect to the backend) and point it to your deployed Backend URL from Step 1!
+
 ## 📄 License
 This project is open-source and available for use and modification.
