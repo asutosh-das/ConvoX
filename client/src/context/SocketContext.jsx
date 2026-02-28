@@ -15,7 +15,9 @@ export const SocketContextProvider = ({ children }) => {
 
     useEffect(() => {
         if (authUser) {
-            const socketInstance = io("http://localhost:5000", {
+            // Use environment variable for production, fallback to localhost for development
+            const backendUrl = import.meta.env.MODE === "development" ? "http://localhost:5000" : (import.meta.env.VITE_BACKEND_URL || "/");
+            const socketInstance = io(backendUrl, {
                 query: {
                     userId: authUser._id,
                 },
