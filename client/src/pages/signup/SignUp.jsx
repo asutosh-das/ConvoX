@@ -32,7 +32,7 @@ const SignUp = () => {
                         </label>
                         <input
                             type='text'
-                            placeholder='John Doe'
+                            placeholder='First & Last Name'
                             className='w-full input input-bordered bg-slate-800/50 border-slate-700 text-slate-200 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 rounded-xl h-12'
                             value={inputs.fullName}
                             onChange={(e) => setInputs({ ...inputs, fullName: e.target.value })}
@@ -45,7 +45,7 @@ const SignUp = () => {
                         </label>
                         <input
                             type='text'
-                            placeholder='johndoe'
+                            placeholder='name@company.com or username'
                             className='w-full input input-bordered bg-slate-800/50 border-slate-700 text-slate-200 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 rounded-xl h-12'
                             value={inputs.username}
                             onChange={(e) => setInputs({ ...inputs, username: e.target.value })}
@@ -58,7 +58,7 @@ const SignUp = () => {
                         </label>
                         <input
                             type='password'
-                            placeholder='Enter Password'
+                            placeholder='••••••••'
                             className='w-full input input-bordered bg-slate-800/50 border-slate-700 text-slate-200 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 rounded-xl h-12'
                             value={inputs.password}
                             onChange={(e) => setInputs({ ...inputs, password: e.target.value })}
@@ -71,7 +71,7 @@ const SignUp = () => {
                         </label>
                         <input
                             type='password'
-                            placeholder='Confirm Password'
+                            placeholder='••••••••'
                             className='w-full input input-bordered bg-slate-800/50 border-slate-700 text-slate-200 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 rounded-xl h-12'
                             value={inputs.confirmPassword}
                             onChange={(e) => setInputs({ ...inputs, confirmPassword: e.target.value })}
