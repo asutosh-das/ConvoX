@@ -15,8 +15,8 @@ export const SocketContextProvider = ({ children }) => {
 
     useEffect(() => {
         if (authUser) {
-            // Use VITE_API_URL for production, fallback to direct Render url, or localhost for local dev
-            const backendUrl = import.meta.env.MODE === "development" ? "http://localhost:5000" : (import.meta.env.VITE_API_URL || "https://convox-ku9e.onrender.com");
+            // Strip any trailing slashes from the Render URL or just hardcode it for safety
+            const backendUrl = import.meta.env.MODE === "development" ? "http://localhost:5000" : "https://convox-ku9e.onrender.com";
             const socketInstance = io(backendUrl, {
                 query: {
                     userId: authUser._id,
