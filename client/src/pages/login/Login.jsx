@@ -29,8 +29,8 @@ const Login = () => {
                         </label>
                         <input
                             type='text'
-                            placeholder='name@company.com or username'
-                            className='w-full input input-bordered bg-slate-800/50 border-slate-700 text-slate-200 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 rounded-xl h-12'
+                            placeholder='Username'
+                            className='w-full input input-bordered bg-slate-800/50 border-slate-700 text-slate-200 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 rounded-xl h-12 pl-4'
                             value={username}
                             onChange={(e) => setUsername(e.target.value)}
                         />
@@ -42,8 +42,8 @@ const Login = () => {
                         </label>
                         <input
                             type='password'
-                            placeholder='••••••••'
-                            className='w-full input input-bordered bg-slate-800/50 border-slate-700 text-slate-200 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 rounded-xl h-12'
+                            placeholder='••••••••••••'
+                            className='w-full input input-bordered bg-slate-800/50 border-slate-700 text-slate-200 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 rounded-xl h-12 pl-4'
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                         />
