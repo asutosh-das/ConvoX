@@ -14,17 +14,30 @@ const MessageInput = () => {
     };
 
     return (
-        <form className='px-4 my-4' onSubmit={handleSubmit}>
-            <div className='w-full relative group'>
+        <form className='px-4 pb-4 pt-2' onSubmit={handleSubmit}>
+            <div className='w-full relative'>
                 <input
                     type='text'
-                    className='block w-full p-4 bg-[#0f0f0f] text-gray-200 rounded-full border border-white/10 focus:outline-none focus:ring-1 focus:ring-white/20 focus:border-white/20 pr-12 transition-all shadow-lg'
+                    className='block w-full p-4 pr-14 rounded-full border focus:outline-none focus:ring-2 transition-all shadow-sm text-sm'
+                    style={{
+                        backgroundColor: "var(--bg-input)",
+                        borderColor: "var(--border-input)",
+                        color: "var(--text-primary)",
+                    }}
                     placeholder='Send a message...'
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
                 />
-                <button type='submit' className='absolute inset-y-0 right-2 flex items-center pr-3 text-gray-500 hover:text-gray-300 transition-colors' disabled={loading}>
-                    {loading ? <div className='loading loading-spinner text-gray-400'></div> : <Send size={20} />}
+                <button
+                    type='submit'
+                    disabled={loading}
+                    className='absolute inset-y-0 right-2 flex items-center pr-3 transition-colors'
+                    style={{ color: message ? "var(--accent)" : "var(--text-secondary)" }}
+                >
+                    {loading
+                        ? <div className='loading loading-spinner' style={{ color: "var(--accent)" }}></div>
+                        : <Send size={20} />
+                    }
                 </button>
             </div>
         </form>

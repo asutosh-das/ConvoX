@@ -21,6 +21,7 @@ export const SocketContextProvider = ({ children }) => {
                 query: {
                     userId: authUser._id,
                 },
+                transports: ["websocket"], // Force pure websockets to bypass Render proxy polling issues
             });
 
             setSocket(socketInstance);
