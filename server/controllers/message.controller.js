@@ -108,11 +108,59 @@ export const getMessages = async (req, res) => {
 
         if (!conversation) return res.status(200).json([]);
 
-        const messages = conversation.messages;
+        // Filter out messages soft-deleted by the requester
+        const messages = conversation.messages.filter(
+            (msg) => !msg.deletedFor?.some((id) => id.toString() === senderId.toString())
+        );
 
         res.status(200).json(messages);
     } catch (error) {
         console.log("Error in getMessages controller: ", error.message);
+        res.status(500).json({ error: "Internal server error" });
+    }
+};
+
+export const deleteMessage = async (req, res) => {
+    try {
+        const { id: messageId } = req.params;
+        const userId = req.user._id;
+
+        const message = await Message.findById(messageId);
+        if (!message) return res.status(404).json({ error: "Message not found" });
+
+        // Soft delete — add userId to deletedFor array
+        if (!message.deletedFor.includes(userId)) {
+            message.deletedFor.push(userId);
+            await message.save();
+        }
+
+        res.status(200).json({ success: true });
+    } catch (error) {
+        console.log("Error in deleteMessage controller: ", error.message);
+        res.status(500).json({ error: "Internal server error" });
+    }
+};
+
+export const toggleStarMessage = async (req, res) => {
+    try {
+        const { id: messageId } = req.params;
+        const userId = req.user._id;
+
+        const message = await Message.findById(messageId);
+        if (!message) return res.status(404).json({ error: "Message not found" });
+
+        // Only sender or receiver can star the message
+        const isParticipant =
+            message.senderId.toString() === userId.toString() ||
+            message.receiverId.toString() === userId.toString();
+        if (!isParticipant) return res.status(403).json({ error: "Not authorized" });
+
+        message.starred = !message.starred;
+        await message.save();
+
+        res.status(200).json({ starred: message.starred });
+    } catch (error) {
+        console.log("Error in toggleStarMessage controller: ", error.message);
         res.status(500).json({ error: "Internal server error" });
     }
 };

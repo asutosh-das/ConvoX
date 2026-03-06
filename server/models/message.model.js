@@ -20,7 +20,15 @@ const messageSchema = new mongoose.Schema(
             type: String,
             enum: ['sent', 'delivered', 'seen'],
             default: 'sent'
-        }
+        },
+        starred: {
+            type: Boolean,
+            default: false,
+        },
+        deletedFor: [{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User",
+        }],
     },
     { timestamps: true }
 );
