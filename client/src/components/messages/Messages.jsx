@@ -3,7 +3,7 @@ import useGetMessages from "../../hooks/useGetMessages";
 import Message from "./Message";
 import useListenMessages from "../../hooks/useListenMessages";
 
-const Messages = () => {
+const Messages = ({ selectMode, selectedIds, onToggleSelect }) => {
     const { messages, loading } = useGetMessages();
     useListenMessages();
     const lastMessageRef = useRef();
@@ -20,7 +20,12 @@ const Messages = () => {
                 messages.length > 0 &&
                 messages.map((message) => (
                     <div key={message._id} ref={lastMessageRef}>
-                        <Message message={message} />
+                        <Message
+                            message={message}
+                            selectMode={selectMode}
+                            isSelected={selectedIds?.has(message._id)}
+                            onToggleSelect={onToggleSelect}
+                        />
                     </div>
                 ))}
 
@@ -33,22 +38,20 @@ const Messages = () => {
 };
 export default Messages;
 
-const MessageSkeleton = () => {
-    return (
-        <div className='animate-pulse'>
-            <div className='flex gap-3 items-center'>
-                <div className='w-10 h-10 rounded-full shrink-0 bg-[#1a1a1a]'></div>
-                <div className='flex flex-col gap-1'>
-                    <div className='h-4 w-40 bg-[#1a1a1a] rounded'></div>
-                    <div className='h-4 w-40 bg-[#1a1a1a] rounded'></div>
-                </div>
-            </div>
-            <div className='flex gap-3 items-center justify-end mt-4'>
-                <div className='flex flex-col gap-1 items-end'>
-                    <div className='h-4 w-40 bg-[#1a1a1a] rounded'></div>
-                </div>
-                <div className='w-10 h-10 rounded-full shrink-0 bg-[#1a1a1a]'></div>
+const MessageSkeleton = () => (
+    <div className='animate-pulse'>
+        <div className='flex gap-3 items-center'>
+            <div className='w-10 h-10 rounded-full shrink-0' style={{ backgroundColor: "var(--bg-input)" }}></div>
+            <div className='flex flex-col gap-1'>
+                <div className='h-4 w-40 rounded' style={{ backgroundColor: "var(--bg-input)" }}></div>
+                <div className='h-4 w-40 rounded' style={{ backgroundColor: "var(--bg-input)" }}></div>
             </div>
         </div>
-    );
-};
+        <div className='flex gap-3 items-center justify-end mt-4'>
+            <div className='flex flex-col gap-1 items-end'>
+                <div className='h-4 w-40 rounded' style={{ backgroundColor: "var(--bg-input)" }}></div>
+            </div>
+            <div className='w-10 h-10 rounded-full shrink-0' style={{ backgroundColor: "var(--bg-input)" }}></div>
+        </div>
+    </div>
+);
