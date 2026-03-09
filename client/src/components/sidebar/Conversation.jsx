@@ -17,8 +17,15 @@ const Conversation = ({ conversation, lastIdx }) => {
                 onClick={() => setSelectedConversation(conversation)}
             >
                 <div className={`avatar ${conversation.isAI ? "online" : ""}`}>
-                    <div className='w-11 rounded-full' style={{ border: "2px solid var(--border-input)" }}>
-                        <img src={conversation.profilePic} alt='user avatar' />
+                    <div className='w-11 rounded-full overflow-hidden flex items-center justify-center' style={{ border: "2px solid var(--border-input)" }}>
+                        <img
+                            src={conversation.profilePic || `https://api.dicebear.com/7.x/initials/svg?seed=${conversation.fullName}`}
+                            alt={conversation.fullName}
+                            onError={(e) => {
+                                e.target.onerror = null;
+                                e.target.src = `https://api.dicebear.com/7.x/initials/svg?seed=${conversation.fullName}&backgroundColor=6366f1&textColor=ffffff`;
+                            }}
+                        />
                     </div>
                 </div>
 
