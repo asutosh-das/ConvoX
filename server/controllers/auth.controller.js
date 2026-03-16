@@ -20,8 +20,8 @@ export const signup = async (req, res) => {
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
 
-        // Generate a stable, unique avatar using DiceBear
-        const profilePic = `https://api.dicebear.com/7.x/avataaars/svg?seed=${username}&backgroundColor=b6e3f4,c0aede,d1d4f9`;
+        // Fallback avatar api
+        const profilePic = `https://avatar.iran.liara.run/public/boy?username=${username}`;
 
         const newUser = new User({
             fullName,

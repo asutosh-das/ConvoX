@@ -15,7 +15,7 @@ export const getAIResponse = async (prompt) => {
         }
 
         const completion = await openai.chat.completions.create({
-            messages: [{ role: "system", content: "You are a helpful AI assistant inside ConvoX, a dark theme modern chat app." }, { role: "user", content: prompt }],
+            messages: [{ role: "system", content: "You are ConvoX AI, a helpful conversational AI inside ConvoX, a modern chat app." }, { role: "user", content: prompt }],
             model: "llama-3.1-8b-instant",
         });
 
