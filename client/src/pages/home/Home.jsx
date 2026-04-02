@@ -3,7 +3,7 @@ import MessageContainer from "../../components/messages/MessageContainer";
 
 const Home = () => {
     return (
-        <div className='flex h-[80vh] w-full max-w-5xl rounded-2xl overflow-hidden shadow-2xl border border-white/10'>
+        <div className='flex h-[92vh] w-[96vw] max-w-7xl rounded-3xl overflow-hidden glassmorphism relative z-10'>
             <Sidebar />
             <MessageContainer />
         </div>

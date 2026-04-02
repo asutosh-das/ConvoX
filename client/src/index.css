@@ -3,57 +3,36 @@
 @tailwind utilities;
 
 /* ============================================
-   DARK THEME — Deep indigo/slate palette
+   PREMIUM DARK THEME — Glassmorphism & Deep Indigo
    ============================================ */
-html[data-theme="dark"] {
-  --bg: #0d0f14;
-  --bg-secondary: #13161d;
-  --bg-card: #181c25;
-  --bg-input: #1e2330;
-  --bg-bubble-me: #3730a3;
-  --bg-bubble-other: #1e2330;
-  --bg-bubble-ai: #0f172a;
+:root {
+  --bg: #09090b;
+  --bg-secondary: rgba(18, 18, 20, 0.4);
+  --bg-card: rgba(18, 18, 20, 0.6);
+  --bg-input: rgba(255, 255, 255, 0.03);
+  --bg-bubble-me: linear-gradient(135deg, #6366f1, #8b5cf6);
+  --bg-bubble-other: rgba(30, 30, 36, 0.8);
+  --bg-bubble-ai: rgba(25, 25, 30, 0.8);
 
-  --text-primary: #e2e8f0;
-  --text-secondary: #64748b;
+  --text-primary: #ffffff;
+  --text-secondary: #a1a1aa;
   --text-bubble-me: #ffffff;
-  --text-bubble-other: #e2e8f0;
-  --text-bubble-ai: #94a3b8;
+  --text-bubble-other: #f4f4f5;
+  --text-bubble-ai: #d4d4d8;
 
-  --border: rgba(255, 255, 255, 0.06);
-  --border-input: rgba(255, 255, 255, 0.1);
+  --border: rgba(255, 255, 255, 0.05);
+  --border-input: rgba(255, 255, 255, 0.08);
   --accent: #6366f1;
   --accent-hover: #4f46e5;
 
-  --scrollbar: rgba(255, 255, 255, 0.08);
-  --scrollbar-hover: rgba(255, 255, 255, 0.15);
+  --scrollbar: rgba(255, 255, 255, 0.05);
+  --scrollbar-hover: rgba(255, 255, 255, 0.1);
 }
 
-/* ============================================
-   LIGHT THEME — Clean warm off-white palette
-   ============================================ */
-html[data-theme="light"] {
-  --bg: #f8fafc;
-  --bg-secondary: #ffffff;
-  --bg-card: #ffffff;
-  --bg-input: #f1f5f9;
-  --bg-bubble-me: #6366f1;
-  --bg-bubble-other: #e2e8f0;
-  --bg-bubble-ai: #dbeafe;
-
-  --text-primary: #0f172a;
-  --text-secondary: #64748b;
-  --text-bubble-me: #ffffff;
-  --text-bubble-other: #1e293b;
-  --text-bubble-ai: #1e40af;
-
-  --border: rgba(0, 0, 0, 0.07);
-  --border-input: rgba(0, 0, 0, 0.12);
-  --accent: #6366f1;
-  --accent-hover: #4f46e5;
-
-  --scrollbar: rgba(0, 0, 0, 0.1);
-  --scrollbar-hover: rgba(0, 0, 0, 0.2);
+/* Fallback for components still using data-theme="dark" */
+html[data-theme="dark"], html[data-theme="light"] {
+  /* Enforce premium dark mode globally */
+  color-scheme: dark;
 }
 
 /* ============================================
@@ -62,6 +41,8 @@ html[data-theme="light"] {
 @layer base {
   html {
     scrollbar-gutter: stable;
+    /* Use Inter/modern sans-serif */
+    font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   }
 
   body {
@@ -72,159 +53,61 @@ html[data-theme="light"] {
 }
 
 /* ============================================
-   UTILITIES
+   UTILITIES / GLASSMORPHISM
    ============================================ */
 @layer utilities {
   .glassmorphism {
-    @apply backdrop-blur-md rounded-2xl shadow-xl;
+    @apply backdrop-blur-xl rounded-3xl shadow-2xl;
     background-color: var(--bg-card);
     border: 1px solid var(--border);
   }
 
-  .glassmorphism-strong {
-    @apply backdrop-blur-xl;
-    background-color: var(--bg-card);
-    border: 1px solid var(--border);
+  .glass-panel {
+    @apply backdrop-blur-2xl;
+    background-color: var(--bg-secondary);
+    border-right: 1px solid var(--border);
+  }
+
+  .glass-input {
+    @apply backdrop-blur-lg rounded-full transition-all duration-300;
+    background-color: var(--bg-input);
+    border: 1px solid var(--border-input);
+    color: var(--text-primary);
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
+  }
+  .glass-input:focus {
+    border-color: var(--accent);
+    outline: none;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.2), 0 0 0 2px rgba(99, 102, 241, 0.2);
   }
 
   .message-fade-in {
-    animation: fadeIn 0.25s ease-out forwards;
-  }
-
-  .theme-input {
-    background-color: var(--bg-input);
-    border-color: var(--border-input);
-    color: var(--text-primary);
-  }
-
-  .theme-surface {
-    background-color: var(--bg-secondary);
-    border-color: var(--border);
-    color: var(--text-primary);
+    animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
 }
 
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(8px);
+    transform: translateY(10px);
   }
-
   to {
     opacity: 1;
     transform: translateY(0);
   }
 }
 
-/* Custom scrollbar */
+/* Custom scrollbar - Ultra Sleek */
 ::-webkit-scrollbar {
-  width: 5px;
+  width: 4px;
 }
-
 ::-webkit-scrollbar-track {
   background: transparent;
 }
-
 ::-webkit-scrollbar-thumb {
   background: var(--scrollbar);
   border-radius: 10px;
 }
-
 ::-webkit-scrollbar-thumb:hover {
   background: var(--scrollbar-hover);
-}
-
-/* ============================================
-   UIVERSE THEME SWITCH
-   ============================================ */
-.switch {
-  font-size: 17px;
-  position: relative;
-  display: inline-block;
-  width: 4em;
-  height: 2.2em;
-  border-radius: 30px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-}
-
-.switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-
-.slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #2a2a2a;
-  transition: 0.4s;
-  border-radius: 30px;
-  overflow: hidden;
-}
-
-.slider:before {
-  position: absolute;
-  content: "";
-  height: 1.2em;
-  width: 1.2em;
-  border-radius: 20px;
-  left: 0.5em;
-  bottom: 0.5em;
-  transition: 0.4s;
-  transition-timing-function: cubic-bezier(0.81, -0.04, 0.38, 1.5);
-  box-shadow: inset 8px -4px 0px 0px #fff;
-}
-
-.switch input:checked+.slider {
-  background-color: #00a6ff;
-}
-
-.switch input:checked+.slider:before {
-  transform: translateX(1.8em);
-  box-shadow: inset 15px -4px 0px 15px #ffcf48;
-}
-
-.star {
-  background-color: #fff;
-  border-radius: 50%;
-  position: absolute;
-  width: 5px;
-  height: 5px;
-  transition: all 0.4s;
-}
-
-.star_1 {
-  left: 2.5em;
-  top: 0.5em;
-}
-
-.star_2 {
-  left: 2.2em;
-  top: 1.2em;
-}
-
-.star_3 {
-  left: 3em;
-  top: 0.9em;
-}
-
-.switch input:checked~.slider .star {
-  opacity: 0;
-}
-
-.cloud {
-  width: 3.5em;
-  position: absolute;
-  bottom: -1.4em;
-  left: -1.1em;
-  opacity: 0;
-  transition: all 0.4s;
-}
-
-.switch input:checked~.slider .cloud {
-  opacity: 1;
 }

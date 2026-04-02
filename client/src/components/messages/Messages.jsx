@@ -10,16 +10,16 @@ const Messages = ({ selectMode, selectedIds, onToggleSelect }) => {
 
     useEffect(() => {
         setTimeout(() => {
-            lastMessageRef.current?.scrollIntoView({ behavior: "smooth" });
+            lastMessageRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
         }, 100);
     }, [messages]);
 
     return (
-        <div className='px-4 flex-1 overflow-auto space-y-2 py-4'>
+        <div className='px-4 space-y-2 py-4'>
             {!loading &&
                 messages.length > 0 &&
                 messages.map((message) => (
-                    <div key={message._id} ref={lastMessageRef}>
+                    <div key={message._id}>
                         <Message
                             message={message}
                             selectMode={selectMode}
@@ -28,6 +28,8 @@ const Messages = ({ selectMode, selectedIds, onToggleSelect }) => {
                         />
                     </div>
                 ))}
+
+            <div ref={lastMessageRef} className="h-4 w-full shrink-0"></div>
 
             {loading && [...Array(3)].map((_, idx) => <MessageSkeleton key={idx} />)}
             {!loading && messages.length === 0 && (

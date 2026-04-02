@@ -14,29 +14,27 @@ const MessageInput = () => {
     };
 
     return (
-        <form className='px-4 pb-4 pt-2' onSubmit={handleSubmit}>
-            <div className='w-full relative'>
+        <form className='w-full' onSubmit={handleSubmit}>
+            <div className='relative flex items-center w-full'>
                 <input
                     type='text'
-                    className='block w-full p-4 pr-14 rounded-full border focus:outline-none focus:ring-2 transition-all shadow-sm text-sm'
-                    style={{
-                        backgroundColor: "var(--bg-input)",
-                        borderColor: "var(--border-input)",
-                        color: "var(--text-primary)",
-                    }}
-                    placeholder='Send a message...'
+                    className='block w-full py-4 pl-6 pr-16 rounded-[2rem] focus:outline-none transition-all shadow-[0_10px_40px_rgba(0,0,0,0.5)] text-[15px] tracking-wide placeholder-gray-500 bg-[#121214]/80 backdrop-blur-2xl border border-white/10 focus:border-indigo-500/50 focus:bg-[#18181b]/90 text-white'
+                    placeholder='Type a message...'
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
                 />
                 <button
                     type='submit'
-                    disabled={loading}
-                    className='absolute inset-y-0 right-2 flex items-center pr-3 transition-colors'
-                    style={{ color: message ? "var(--accent)" : "var(--text-secondary)" }}
+                    disabled={loading || !message.trim()}
+                    className={`absolute right-2 flex items-center justify-center w-10 h-10 rounded-full transition-all duration-300 ${
+                        message.trim() 
+                            ? "bg-indigo-500 text-white shadow-[0_0_15px_rgba(99,102,241,0.5)] hover:bg-indigo-400 hover:scale-105" 
+                            : "bg-white/5 text-gray-500"
+                    }`}
                 >
                     {loading
-                        ? <div className='loading loading-spinner' style={{ color: "var(--accent)" }}></div>
-                        : <Send size={20} />
+                        ? <div className='w-5 h-5 border-2 border-t-white border-white/30 rounded-full animate-spin'></div>
+                        : <Send size={18} className={message.trim() ? "ml-0.5" : ""} />
                     }
                 </button>
             </div>
