@@ -5,7 +5,7 @@ import toast from "react-hot-toast";
 
 const Message = ({ message, selectMode, isSelected, onToggleSelect }) => {
     const { authUser } = useAuthContext();
-    const { messages, setMessages } = useConversation();
+    const { messages, setMessages, selectedConversation } = useConversation();
     const fromMe = message.senderId === authUser._id;
     const isAI = message.isAI || message.senderId === "ai" || message.senderId?.includes("ai");
 
@@ -59,10 +59,19 @@ const Message = ({ message, selectMode, isSelected, onToggleSelect }) => {
     };
 
     const getBubbleRadius = () => {
-        return fromMe ? "rounded-3xl rounded-tr-[10px]" : "rounded-3xl rounded-tl-[10px]";
+        return fromMe ? "rounded-3xl rounded-tr-[5px]" : "rounded-3xl rounded-tl-[5px]";
     };
 
     const chatClassName = fromMe ? "chat-end" : "chat-start";
+    
+    // Safely determine the profile picture to display for this message.
+    let fallbackPic;
+    if (isAI && !fromMe) {
+        fallbackPic = `https://api.dicebear.com/7.x/bottts/svg?seed=${selectedConversation?.fullName}`;
+    } else {
+        fallbackPic = `https://api.dicebear.com/7.x/avataaars/svg?seed=${fromMe ? authUser?.fullName : selectedConversation?.fullName}`;
+    }
+    const profilePic = fromMe ? (authUser?.profilePic || fallbackPic) : (selectedConversation?.profilePic || fallbackPic);
 
     if (selectMode) {
         return (
@@ -78,6 +87,19 @@ const Message = ({ message, selectMode, isSelected, onToggleSelect }) => {
                     {isSelected && <span className="text-white text-xs font-bold">✓</span>}
                 </div>
                 <div className={`chat ${chatClassName} flex-1`}>
+                    <div className="chat-image avatar">
+                        <div className="w-8 h-8 rounded-full border border-white/10 shadow-md overflow-hidden relative">
+                            <img 
+                                src={profilePic} 
+                                alt="avatar" 
+                                className="object-cover w-full h-full"
+                                onError={(e) => {
+                                    e.target.onerror = null;
+                                    e.target.src = fallbackPic;
+                                }}
+                            />
+                        </div>
+                    </div>
                     <div className={`chat-bubble shadow-xl px-5 py-3 text-[15px] leading-relaxed backdrop-blur-md ${getBubbleRadius()}`} style={getBubbleStyle()}>
                         {message.message}
                     </div>
@@ -88,6 +110,19 @@ const Message = ({ message, selectMode, isSelected, onToggleSelect }) => {
 
     return (
         <div className={`chat ${chatClassName} message-fade-in group`}>
+            <div className="chat-image avatar self-end mb-5">
+                <div className="w-8 h-8 rounded-full border border-white/10 shadow-md overflow-hidden relative">
+                    <img 
+                        src={profilePic} 
+                        alt="avatar" 
+                        className="object-cover w-full h-full"
+                        onError={(e) => {
+                            e.target.onerror = null;
+                            e.target.src = fallbackPic;
+                        }}
+                    />
+                </div>
+            </div>
             {/* The invisible spacer div helps block out the margin without messing up flex */}
             <div className={`relative chat-bubble shadow-xl px-5 py-3 text-[15px] leading-relaxed backdrop-blur-md ${getBubbleRadius()}`} style={getBubbleStyle()}>
                 {message.message}

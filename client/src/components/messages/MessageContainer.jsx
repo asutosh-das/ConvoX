@@ -89,8 +89,16 @@ const MessageContainer = () => {
                         ) : (
                             <div className="flex items-center gap-4 w-full justify-between">
                                 <div className="flex items-center gap-3">
-                                    <div className="w-10 h-10 rounded-full overflow-hidden border border-white/10 shadow-lg">
-                                       <img src={selectedConversation.profilePic || `https://api.dicebear.com/7.x/initials/svg?seed=${selectedConversation.fullName}`} alt="profile" className="w-full h-full object-cover" />
+                                    <div className="w-10 h-10 rounded-full overflow-hidden border border-white/10 shadow-lg relative">
+                                       <img 
+                                           src={selectedConversation.profilePic || `https://api.dicebear.com/7.x/${selectedConversation.isAI ? 'bottts' : 'avataaars'}/svg?seed=${selectedConversation.fullName}`} 
+                                           alt="profile" 
+                                           className="w-full h-full object-cover"
+                                           onError={(e) => {
+                                               e.target.onerror = null;
+                                               e.target.src = `https://api.dicebear.com/7.x/${selectedConversation.isAI ? 'bottts' : 'avataaars'}/svg?seed=${selectedConversation.fullName}`;
+                                           }}
+                                       />
                                     </div>
                                     <div className="flex flex-col">
                                         <span className='font-bold text-base text-white tracking-wide'>{selectedConversation.fullName}</span>

@@ -22,12 +22,12 @@ const Conversation = ({ conversation, lastIdx }) => {
                 <div className={`avatar ${conversation.isAI ? "online" : ""}`}>
                     <div className="w-12 h-12 rounded-full overflow-hidden flex items-center justify-center border border-white/10 bg-[#121214] shadow-inner">
                         <img
-                            src={conversation.profilePic || `https://api.dicebear.com/7.x/initials/svg?seed=${conversation.fullName}`}
+                            src={conversation.profilePic || `https://api.dicebear.com/7.x/${conversation.isAI ? 'bottts' : 'avataaars'}/svg?seed=${conversation.fullName}`}
                             alt={conversation.fullName}
                             className="object-cover w-full h-full"
                             onError={(e) => {
                                 e.target.onerror = null;
-                                e.target.src = `https://api.dicebear.com/7.x/initials/svg?seed=${conversation.fullName}&backgroundColor=6366f1&textColor=ffffff`;
+                                e.target.src = `https://api.dicebear.com/7.x/${conversation.isAI ? 'bottts' : 'avataaars'}/svg?seed=${conversation.fullName}`;
                             }}
                         />
                     </div>
